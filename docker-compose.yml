@@ -1,0 +1,49 @@
+version: '3.6'
+# Deploys MongoDB with customization scripts and container with Mongo client
+# https://fabianlee.org/2018/05/20/docker-using-docker-compose-to-link-a-mongodb-server-and-client/
+#
+# usage:
+# sudo docker-compose build
+# sudo docker-compose up
+
+services:
+  postgres:
+    image: postgres:13.3
+    container_name: postgres
+    environment:
+      POSTGRES_DB: "dashboard"
+      POSTGRES_USER: "postgres"
+      POSTGRES_PASSWORD: "postgres"
+    ports:
+      - "5432:5432"
+  api:
+    container_name: dashboard(nest)
+    build:
+      dockerfile: Dockerfile
+      context: .
+      # Only will build development stage from our dockerfile
+      target: development
+    volumes:
+      - .:/usr/src/app
+    # env_file:
+    #   - .env
+    # Run a command against the development stage of the image
+    command: npm run start:dev
+    ports:
+      - 3000:3000
+    networks:
+      - mongo_net
+    depends_on:
+      - mongodb
+      # для localhost внутри докера, в коде писать host.docker.internal:27017
+    extra_hosts:
+      - 'host.docker.internal:host-gateway'
+
+volumes:
+  # default dir on Ubuntu: /var/lib/docker/volumes
+  mongodb:
+  mongoconfig:
+
+networks:
+  mongo_net:
+    driver: bridge
