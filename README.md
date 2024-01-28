@@ -1,10 +1,35 @@
-# Инструкция по запуску
+# pet-project-employee-dashboard
 
-1. запускам postgres через докер
-   `docker run --name postgres -p 5432:5432 -e POSTGRES_PASSWORD=postgres -d postgres`
-2. Устанавливаем зависимости проекта
-   `npm i`
-3. Запускаем сервак
-   `npm run start:dev`
+Проект предназначен для контроля за группой сотрудников, позволяет визуализировать сотрудников и их занятость в рабочем пространстве.
 
-Ссылка на swagger - <http://localhost:3000/swagger>
+Функционал:
+
+1) Регистрация и авторизация с использованием пары access/refresh JWT tokens.
+2) Ролевая модель.
+3) Создание dashboards для объединения сотрудников в группы.
+4) Присвоение сотрудникам разного рода заметок, позволяющих визуально отображать их занятость в рабочем пространстве.
+
+## Инструкция по запуску
+
+1) запускам postgres через докер
+
+  ```bash
+   docker run --name postgres -p 5432:5432 -e POSTGRES_PASSWORD=postgres -d postgres
+  ```
+
+2) Устанавливаем зависимости проекта
+
+  ```bash
+   npm i
+  ```
+
+3) Запускаем server
+
+  ```bash
+   npm run start:dev
+  ```
+
+## После запуска backend:
+
+1) backend будет доступен по адресу - <http://localhost:3000>
+2) Swagger будет по адресу - <http://localhost:3000/swagger>
